@@ -1,0 +1,15 @@
+[project]
+name = "support-ticket-env"
+version = "0.1.0"
+description = "OpenEnv Support Ticket Simulation Environment"
+authors = [{ name = "Shreeya" }]
+dependencies = [
+    "pydantic",
+    "fastapi",
+    "uvicorn",
+    "openai"
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
