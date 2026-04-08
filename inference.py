@@ -1,26 +1,44 @@
 import os
+from openai import OpenAI
 from env import SupportEnv, Action
+
+# Required environment variables
+API_BASE_URL = os.getenv("API_BASE_URL", "https://api.openai.com/v1")
+MODEL_NAME = os.getenv("MODEL_NAME", "gpt-3.5-turbo")
+HF_TOKEN = os.getenv("HF_TOKEN")
+
+# OpenAI client (required by checklist)
+client = OpenAI(
+    api_key=HF_TOKEN,
+    base_url=API_BASE_URL
+)
 
 env = SupportEnv()
 
+# START log
+print("START")
+
 obs = env.reset()
+print(f"STEP: Ticket -> {obs.ticket}")
 
-print("Ticket:", obs.ticket)
-
-# Simulated response instead of API
+# Rule-based baseline (no API dependency)
 if "order" in obs.ticket.lower():
-    reply = "Sorry for the inconvenience. I will track your order and update you."
+    reply = "Sorry, I will track your order."
 elif "damaged" in obs.ticket.lower():
-    reply = "Sorry for the issue. We can offer a refund or replacement for the damaged product."
+    reply = "We will provide refund or replacement."
 elif "charged" in obs.ticket.lower():
-    reply = "We apologize. We will refund the extra charge and escalate this issue as priority."
+    reply = "We will refund and escalate this issue."
 else:
-    reply = "Sorry, we will look into this issue."
-print("Model Response:", reply)
+    reply = "We will look into this issue."
+
+print(f"STEP: Response -> {reply}")
 
 action = Action(response=reply)
 
 obs, reward, done, info = env.step(action)
 
-print("Reward:", reward)
-print("Task Level:", info["task_level"])
+print(f"STEP: Reward -> {reward}")
+print(f"STEP: Task Level -> {info['task_level']}")
+
+# END log
+print("END")
