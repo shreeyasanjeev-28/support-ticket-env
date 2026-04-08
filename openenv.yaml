@@ -1,0 +1,13 @@
+name: support-ticket-env
+description: Customer support simulation environment
+version: 0.1
+
+observation_space:
+  ticket: string
+  history: list
+
+action_space:
+  response: string
+
+reward:
+  type: float
