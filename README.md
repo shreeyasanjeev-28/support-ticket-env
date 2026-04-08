@@ -24,3 +24,11 @@ python inference.py
 
 ## Baseline Score
 ~0.5–1.0 depending on model
+
+## Baseline Inference
+Run the baseline agent:
+python inference.py
+This script follows the required OpenEnv format:
+- Uses environment variables (API_BASE_URL, MODEL_NAME, HF_TOKEN)
+- Uses OpenAI client
+- Outputs structured logs (START / STEP / END)
