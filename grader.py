@@ -1,10 +1,22 @@
-def grade(response: str, expected_keywords: list):
-    score = 0
-
+def grade_response(task_type, response):
     response = response.lower()
 
-    for word in expected_keywords:
-        if word in response:
-            score += 1
+    if task_type == "easy":
+        if "track" in response or "order" in response:
+            return 0.8
+        else:
+            return 0.2
 
-    return score / len(expected_keywords)
+    elif task_type == "medium":
+        if "refund" in response or "replacement" in response:
+            return 0.85
+        else:
+            return 0.3
+
+    elif task_type == "hard":
+        if "refund" in response or "escalate" in response:
+            return 0.9
+        else:
+            return 0.4
+
+    return 0.5
