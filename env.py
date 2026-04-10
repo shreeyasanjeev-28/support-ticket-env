@@ -1,46 +1,70 @@
 from pydantic import BaseModel
-from typing import Tuple
-from tasks import TASKS
-from grader import grade
+from tasks import tasks
+from grader import grade_response
 import random
 
+# ✅ Observation model
 class Observation(BaseModel):
     ticket: str
-    history: list[str]
+    history: list = []
 
+# ✅ Action model
 class Action(BaseModel):
     response: str
 
+# ✅ Environment
 class SupportEnv:
     def __init__(self):
         self.current_task = None
+        self.current_ticket = None
+        self.history = []
         self.done = False
 
+    # 🔁 Reset environment
     def reset(self):
-        self.current_task = random.choice(TASKS)
+        task = random.choice(tasks)
+
+        self.current_task = task["type"]   # ✅ IMPORTANT
+        self.current_ticket = task["ticket"]
+        self.history = []
         self.done = False
+
         return Observation(
-            ticket=self.current_task["ticket"],
-            history=[]
+            ticket=self.current_ticket,
+            history=self.history
         )
 
-    def step(self, action: Action) -> Tuple[Observation, float, bool, dict]:
-        score = grade(action.response, self.current_task["expected_keywords"])
+    # ⚡ Step function
+    def step(self, action: Action):
+        if self.done:
+            return (
+                Observation(ticket=self.current_ticket, history=self.history),
+                0.5,
+                True,
+                {"task_level": self.current_task}
+            )
 
-        reward = score
+        # Add response to history
+        self.history.append(action.response)
 
-        # penalty for bad/short responses
-        if len(action.response.strip()) < 5:
-            reward -= 0.2
+        # ✅ USE GRADER HERE
+        reward = grade_response(self.current_task, action.response)
 
+        # End after one step
         self.done = True
 
         return (
-            Observation(ticket="", history=[]),
+            Observation(ticket=self.current_ticket, history=self.history),
             reward,
             self.done,
-            {"task_level": self.current_task["level"]}
+            {"task_level": self.current_task}
         )
 
+    # 📊 Current state
     def state(self):
-        return self.current_task
+        return {
+            "ticket": self.current_ticket,
+            "history": self.history,
+            "done": self.done,
+            "task_level": self.current_task
+        }
