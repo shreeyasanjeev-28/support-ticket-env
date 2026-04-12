@@ -80,3 +80,7 @@ class SupportEnv:
             "done": self.done,
             "task_level": self.current_task
         }
+
+
+    def tasks(self):
+        return ["easy", "medium", "hard"]
