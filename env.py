@@ -1,3 +1,4 @@
+from grader import grade_easy, grade_medium, grade_hard
 from pydantic import BaseModel
 from tasks import tasks
 from grader import grade_response
