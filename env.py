@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from tasks import tasks
-from grader import grade_response
+from grader import grade_easy, grade_medium, grade_hard
 import random
 
 # ✅ Observation model
