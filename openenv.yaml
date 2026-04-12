@@ -1,13 +1,12 @@
-name: support-ticket-env
-description: Customer support simulation environment
-version: 0.1
+id: support-ticket-env
+name: Support Ticket Environment
+description: Simulates customer support tasks
+entry_point: env:SupportEnv
 
-observation_space:
-  ticket: string
-  history: list
-
-action_space:
-  response: string
-
-reward:
-  type: float
+tasks:
+  - id: easy
+    description: Order tracking
+  - id: medium
+    description: Damaged product
+  - id: hard
+    description: Billing issue
