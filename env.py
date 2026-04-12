@@ -49,9 +49,8 @@ class SupportEnv:
         # Add response to history
         self.history.append(action.response)
 
-        # ✅ USE GRADER HERE
         reward = grade_response(self.current_task, action.response)
-
+        
         # End after one step
         self.done = True
 
