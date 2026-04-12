@@ -50,7 +50,17 @@ class SupportEnv:
         # Add response to history
         self.history.append(action.response)
 
-        reward = grade_response(action.response)
+        if self.current_task == "easy":
+            reward = grade_easy(action.response)
+        
+        elif self.current_task == "medium":
+            reward = grade_medium(action.response)
+        
+        elif self.current_task == "hard":
+            reward = grade_hard(action.response)
+        
+        else:
+            reward = 0.5
         
         # End after one step
         self.done = True
