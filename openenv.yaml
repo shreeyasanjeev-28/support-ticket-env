@@ -6,7 +6,15 @@ entry_point: env:SupportEnv
 tasks:
   - id: easy
     description: Order tracking
+    grader: easy
   - id: medium
     description: Damaged product
+    grader: medium
   - id: hard
     description: Billing issue
+    grader: hard
+
+graders:
+  easy: grader:grade_easy
+  medium: grader:grade_medium
+  hard: grader:grade_hard
