@@ -1,17 +1,19 @@
+from grader import grade_easy, grade_medium, grade_hard
+
 tasks = [
     {
-        "type": "easy",
-        "ticket": "Where is my order?",
-        "grader": "easy"
+        "id": "easy",
+        "input": "Where is my order?",
+        "grader": grade_easy
     },
     {
-        "type": "medium",
-        "ticket": "I received a damaged product",
-        "grader": "medium"
+        "id": "medium",
+        "input": "I received a damaged product",
+        "grader": grade_medium
     },
     {
-        "type": "hard",
-        "ticket": "I was charged twice for my order",
-        "grader": "hard"
+        "id": "hard",
+        "input": "I was charged twice for my order",
+        "grader": grade_hard
     }
 ]
