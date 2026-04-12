@@ -22,13 +22,15 @@ class SupportEnv:
 
     # 🔁 Reset environment
     def reset(self):
-        task = random.choice(tasks)
+       task = random.choice(tasks)
 
-        self.current_task = task["type"]   # ✅ IMPORTANT
+        self.current_task = task["type"]
         self.current_ticket = task["ticket"]
+        self.current_grader = task["grader"]   
+        
         self.history = []
         self.done = False
-
+        
         return Observation(
             ticket=self.current_ticket,
             history=self.history
